@@ -1,0 +1,144 @@
+/* Registration Style */
+.background {
+  background-image: url('Dark Blue and Orange Online Shop Logo.png');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background-color: #ebe4e0; 
+}
+ 
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+form {
+  background-color: rgba(247, 127, 48, 0.644); 
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  backdrop-filter: blur(10px); 
+}
+
+
+form label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333333;
+  font-weight: bold;
+}
+
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="number"],
+form input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #020202;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form input[type="tel"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus {
+  border-color: #4CAF50; 
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  outline: none;
+}
+
+
+form input[type="radio"] {
+  margin-right: 5px;
+}
+
+form label[for="Male"],
+form label[for="Female"] {
+  margin-right: 15px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #292828;
+}
+
+
+form input[type="submit"],
+form input[type="reset"] {
+  width: 48%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+/* Submit Button */
+form input[type="submit"] {
+  background: linear-gradient(45deg, #4CAF50, #81C784); 
+  color: white;
+}
+
+/* Reset Button */
+form input[type="reset"] {
+  background: linear-gradient(45deg, #2257eb, #2257eb
+  );
+  color: white;
+}
+
+/* Button Hover Effects */
+form input[type="submit"]:hover {
+  background: linear-gradient(45deg, #45a049, #66bb6a); 
+}
+
+form input[type="reset"]:hover {
+  background: linear-gradient(45deg, #d32f2f, #e57373); 
+}
+
+
+form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+
+@media (max-width: 600px) {
+  form {
+      padding: 25px 20px;
+  }
+
+  form input[type="submit"],
+  form input[type="reset"] {
+      width: 100%;
+      margin-bottom: 15px;
+  }
+}
