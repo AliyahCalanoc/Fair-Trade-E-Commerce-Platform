@@ -1,61 +1,56 @@
-<?php 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $age = $_POST['Age'];
-    $birthday = $_POST['birthday'];
-    $gender = $_POST['Gender'];
+<?php  
+session_start();
+include 'styles/Registration.html';
+require_once 'dbConnection.php';
+require_once 'Crud.php';
 
+class Registration {
+    public function registerUser  () {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            
+            $database = new ECommerce();
+            $db = $database->Connect();
+         
+        
+            $user = new User($db);
+            $user->username = htmlspecialchars(trim($_POST['username']));
+            $user->password = password_hash(htmlspecialchars(trim($_POST['password'])), PASSWORD_DEFAULT);            $user->email = htmlspecialchars(trim($_POST['email']));
+            $user->phone = htmlspecialchars(trim($_POST['phone']));
+            $user->age = htmlspecialchars(trim($_POST['Age']));
+            $user->birthday = htmlspecialchars(trim($_POST['birthday']));
+            $user->gender = htmlspecialchars(trim($_POST['Gender']));
+
+            
+            if ($user->create()) {
+                $_SESSION['message'] = "Registration successful!";
+                echo "<script>
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Registration successful!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = 'Login.php';
+                        });
+                      </script>";
+            } else {
+                $_SESSION['message'] = "Registration failed. Please try again.";
+                echo "<script>
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Email already used. Registration Failed',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = 'Registration.php';
+                        });
+                      </script>";
+            }
+        }
+    }
 }
 
+
+$registration = new Registration();
+$registration->registerUser ();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <link rel="stylesheet" href="regisstyle.css">
-</head>
-<body>
-    
-    <div class="background">
-        <form action="Login.php" method="GET" enctype="multipart/form-data">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Username" minlength="6" maxlength="15" required><br>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="******" required><br>
-
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="sample@email.com" required><br>
-
-            <label for="phone">Cellphone/Telephone #:</label>
-            <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
-
-            <label for="Age">Age:</label>
-            <input type="number" id="Age" name="Age" min="18" required><br>
-
-            <label for="birthday">Birthdate:</label>
-            <input type="date" id="birthday" name="birthday" required><br>
-
-            <label for="Gender">Gender: </label>
-            
-            <label for="Male">Male</label>
-            <input type="radio" id="Male" value="Male" name="Gender">
-            
-            <label for="Female">Female</label>
-            <input type="radio" id="Female" value="Female" name="Gender"><br>
-
-            <div class="button-container">
-                <input type="reset" value="Reset">
-                <input type="submit" value="Register">
-            </div>
-        </form>
-    </div>
-</body>
-</html>

@@ -1,58 +1,55 @@
 <?php
+session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+require_once 'dbConnection.php';
+require_once 'Crud.php';
+include 'styles/Login.html';
 
-    // Hardcoded para macheck if nagfufunction ng ayos ang login
-    $stored_username = 'SampleName';
-    $stored_password = 'password123';
+class Login {
+    public $db;
 
-    if ($username === $stored_username && $password === $stored_password) {
-        echo "Login successful! Welcome, $username.";
-        
-        header("Location: dashboard.php");
-        exit();
-    } else {
-        $error_message = "Invalid username or password.";
-        
+    public function __construct($db) {
+        $this->db = $db;
+    }
+
+    public function authenticate() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $inputUsername = htmlspecialchars(trim($_POST['username']));
+            $inputPassword = htmlspecialchars(trim($_POST['password']));
+
+            $user = new User($this->db);
+            $result = $user->read(); 
+
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['username'] === $inputUsername && password_verify($inputPassword, $row['password'])) {
+                    $_SESSION['username'] = $inputUsername; 
+                    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                          <script>
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Login successful! Welcome, $inputUsername.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = 'homepage.php';
+                            });
+                          </script>";
+                    exit();
+                }
+            }
+            return "Invalid username or password.";
+        }
+        return null;
     }
 }
+
+$ecommerce = new ECommerce();
+$db = $ecommerce->Connect();
+
+$login = new Login($db);
+$error_message = $login->authenticate();
+
+if ($error_message) {
+    echo $error_message; // Display error message if login fails
+}
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <div class="background">
-        <form action="Login.php" method="POST">
-            <h2>Login</h2>
-
-            <?php if (isset($error_message)): ?>
-            <div class="error-message"><?php echo $error_message; ?></div>
-        <?php endif; ?>
-
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required><br>
-
-            <div class="button-container">
-                <input type="reset" value="Reset">
-                <input type="submit" value="Login">
-            </div>
-
-            <p>Doesn't have an account? <a href="Registration.php">Register here</a></p>
-        </form>
-    </div>
-
-</body>
-</html>
