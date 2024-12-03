@@ -1,30 +1,55 @@
 <?php
 session_start();
 
+require_once 'dbConnection.php';
+require_once 'Crud.php';
 include 'styles/Login.html';
+
 class Login {
-    public $stored_username ;
-    public $stored_password;
+    public $db;
 
-    public function handleLogin() {
+    public function __construct($db) {
+        $this->db = $db;
+    }
+
+    public function authenticate() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $inputUsername = htmlspecialchars(trim($_POST['username']));
+            $inputPassword = htmlspecialchars(trim($_POST['password']));
 
-            if ($username === $this->stored_username && $password === $this->stored_password) {
-                echo "Login successful! Welcome, $username.";
-                header("Location: homepage.php");
-                exit();
-            } else {
-                return "Invalid username or password.";
+            $user = new User($this->db);
+            $result = $user->read(); 
+
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['username'] === $inputUsername && password_verify($inputPassword, $row['password'])) {
+                    $_SESSION['username'] = $inputUsername; 
+                    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                          <script>
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Login successful! Welcome, $inputUsername.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = 'homepage.php';
+                            });
+                          </script>";
+                    exit();
+                }
             }
+            return "Invalid username or password.";
         }
         return null;
     }
 }
 
-$login = new Login();
-$error_message = $login->handleLogin();
+$ecommerce = new ECommerce();
+$db = $ecommerce->Connect();
+
+$login = new Login($db);
+$error_message = $login->authenticate();
+
+if ($error_message) {
+    echo $error_message; // Display error message if login fails
+}
 ?>
-
-
