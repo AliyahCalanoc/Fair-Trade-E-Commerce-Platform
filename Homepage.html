@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGH Fair Trade Shop</title>
+  <link rel="stylesheet" href="styles/Homepage.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script>
+    function setCategory(category) {
+        // Redirect to the same page with the selected category
+        window.location.href = 'homepage.php?category=' + category;
+    }
+</script>
+</head>
+<body>
+  <div class="content">
+    <!-- Placeholder for product display -->
+</div>
+<div class="sidebar">
+    <a href="homepage.php" class="logo">
+        <img src="images/agh.png" alt="AGH Fair Trade">
+    </a>
+    <nav>
+        <ul>
+            <li><a href="#" onclick="setCategory('men');"><i class="fas fa-male"></i>Men</a></li>
+            <li><a href="#" onclick="setCategory('women');"><i class="fas fa-female"></i> Women</a></li>
+            <li><a href="#" onclick="setCategory('kids');"><i class="fas fa-child"></i> Kids</a></li>
+            <li><a href="#" onclick="setCategory('homeliving');"><i class="fas fa-home"></i> Home & Living</a></li>
+        </ul>
+    </nav>
+    <div class="logout-container">
+        <a href="Logout.php" class="logout-button">Log Out</a>
+    </div>
+</div>
+  <div class="content">
+    <header>
+      <div class="top-bar">
+        
+        <div class="user-actions">
+          <a href="Account.php"><i class="fas fa-user-circle"></i> My Account</a>
+          <a href="cart.php" class="cart-button"><i class="fas fa-shopping-cart"></i> Cart</a>
+      </div>       
+     </div>
+    </header>
+
+    <main>
+      <section class="banner">
+        <img src="images/Banner.png" alt="Shop Fair, Live Fair">
+      </section>
+
+      <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+          <div class="product">
+            <img src="images/Men's Polo.jpg" alt="Product 1" class="product-image">
+            <h3 class="product-title">Men's Polo</h3>
+          
+            
+          </div>
+          <div class="product">
+            <img src="images/Women's Shirt.jpg" alt="Product 2" class="product-image">
+            <h3 class="product-title">Women's Shirt</h3>
+            
+            
+          </div>
+          <div class="product">
+            <img src="images/Kid's toy Crochet.jpg" alt="Product 3" class="product-image">
+            <h3 class="product-title">Toy Crochet</h3>
+            
+            
+          </div>
+          <div class="product">
+            <img src="images/Handmade.jpeg" alt="Product 4" class="product-image">
+            <h3 class="product-title">Handmade Bag</h3>
+           
+            
+          </div>
+          <div class="product">
+            <img src="images/Rice.jpeg" alt="Product 5" class="product-image">
+            <h3 class="product-title">Well Milled Rice</h3>
+            
+            
+          </div>
+          <div class="product">
+            <img src="images/Mugs.jpeg" alt="Product 6" class="product-image">
+            <h3 class="product-title">Handmade Mug</h3>
+           
+            
+          </div>
+          <div class="product">
+            <img src="images/Piaya.jpg" alt="Product 7" class="product-image">
+            <h3 class="product-title">Ilo-ilo's Ube Piaya</h3>
+            
+            
+          </div>
+        </div>
+      </section>
+          </main>
+
+    <footer>
+      <p>&copy; 2024 AGH Fair Trade Shop - All Rights Reserved</p>
+    </footer>
+  </div>
+</body>
+</html>
